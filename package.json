@@ -1,0 +1,13 @@
+{
+  "name": "line-21day-drawcard",
+  "version": "1.0.0",
+  "description": "LINE 官方帳號 21天重啟 隨機抽圖卡互動 Flex Message",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^7.5.0",
+    "express": "^4.18.2"
+  }
+}
