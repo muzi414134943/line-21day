@@ -35,9 +35,7 @@ const QUOTES_IMAGES = [
 ];
 
 const HEAL_CHAT_URL = 'https://liff.line.me/2007569910-ZoE058zO';
-const OFFICIAL_WEB = 'https://www.muzisoulhealing.tw/'; // 你可修改官網網址
 
-// Flex Message Builder
 function buildFlexCard(imgUrl) {
   return {
     "type": "bubble",
@@ -49,6 +47,10 @@ function buildFlexCard(imgUrl) {
       "aspectMode": "cover"
     },
     "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
           "type": "text",
           "text": "請靜心感受今日語錄的訊息吧～",
           "wrap": true,
@@ -88,15 +90,12 @@ function buildFlexCard(imgUrl) {
             "label": "我想療癒聊",
             "uri": HEAL_CHAT_URL
           }
-        },
-          }
         }
       ]
     }
   };
 }
 
-// ★★★補上這段 handleEvent 定義★★★
 async function handleEvent(event) {
   if (
     event.type === 'message' &&
@@ -111,7 +110,6 @@ async function handleEvent(event) {
       contents: flexMsg
     });
   }
-  // 其它 event 可加 else if 擴充
 }
 
 module.exports = async (req, res) => {
