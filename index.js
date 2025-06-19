@@ -3,8 +3,8 @@ const line = require('@line/bot-sdk');
 
 // 設定環境參數
 const config = {
-  channelAccessToken: '+ijC7t1YzXUF6aUwo202FJ0OinSKWne/M8LP4/PO/gARcGsI/9VlQwDQ7JYJNtno7NSIuI0zGVnXaGQhc+dRU00LiRfwy8p/8g1XPOzQiS4mbwwZsAk2NOmTqfV41XaGYUcsqExnxgvJi8FuiCnjQQdB04t89/1O/w1cDnyilFU=',
-  channelSecret: '826b49cecbcd515fb9f4ac354eb4ef01'
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.CHANNEL_SECRET
 };
 
 const app = express();
