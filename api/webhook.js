@@ -34,7 +34,6 @@ const QUOTES_IMAGES = [
   'https://i.postimg.cc/YCLHpxKy/9.png'
 ];
 
-const COVER_IMG = 'https://i.postimg.cc/kMtsPNqG/21-Day-Soul-Reboot-Quotes1.png';
 const HEAL_CHAT_URL = 'https://liff.line.me/2007569910-ZoE058zO';
 const OFFICIAL_WEB = 'https://www.muzisoulhealing.tw/'; // 你可修改官網網址
 
@@ -102,12 +101,6 @@ function buildFlexCard(imgUrl) {
             "uri": HEAL_CHAT_URL
           }
         },
-        {
-          "type": "button",
-          "action": {
-            "type": "uri",
-            "label": "官網",
-            "uri": OFFICIAL_WEB
           }
         }
       ]
