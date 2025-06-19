@@ -1,14 +1,10 @@
-const express = require('express');
-const line = require('@line/bot-sdk');
+const { Client } = require('@line/bot-sdk');
 
-// 設定環境參數
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.CHANNEL_SECRET
+  channelSecret: process.env.CHANNEL_SECRET,
 };
-
-const app = express();
-const client = new line.Client(config);
+const client = new Client(config);
 
 const QUOTES_IMAGES = [
   'https://i.postimg.cc/bw4qbB9h/1.png',
@@ -119,43 +115,40 @@ function buildFlexCard(imgUrl) {
   };
 }
 
-// webhook 路由
-app.post('/webhook', line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result));
-});
-
-// 處理消息事件
-function handleEvent(event) {
-  // 只處理文字訊息
-  if (event.type === 'message' && event.message.type === 'text' && event.message.text.includes('21天重啟')) {
+// ★★★補上這段 handleEvent 定義★★★
+async function handleEvent(event) {
+  if (
+    event.type === 'message' &&
+    event.message.type === 'text' &&
+    event.message.text.includes('21天重啟')
+  ) {
     const imgUrl = QUOTES_IMAGES[Math.floor(Math.random() * QUOTES_IMAGES.length)];
     const flexMsg = buildFlexCard(imgUrl);
-    return client.replyMessage(event.replyToken, {
+    await client.replyMessage(event.replyToken, {
       type: "flex",
       altText: "21天重啟 隨機抽卡",
       contents: flexMsg
     });
   }
-  // 處理 postback 或其他可再擴充
-  return Promise.resolve(null);
+  // 其它 event 可加 else if 擴充
 }
 
-// 提供官網/第三方抽卡 API
-app.get('/draw', (req, res) => {
-  const imgUrl = QUOTES_IMAGES[Math.floor(Math.random() * QUOTES_IMAGES.length)];
-  res.json({
-    img: imgUrl,
-    cover: COVER_IMG,
-    text: '請靜心感受今日語錄的訊息吧～'
-  });
-});
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(200).send('OK');
+    return;
+  }
 
-app.get('/', (req, res) => res.send('Line 21天重啟 抽卡系統 Running!'));
-
-// 啟動服務
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
-});
+  try {
+    const events = req.body.events;
+    if (!events) {
+      res.status(200).send('No events');
+      return;
+    }
+    await Promise.all(events.map(handleEvent));
+    res.status(200).json({ status: 'ok' });
+  } catch (err) {
+    console.error(err);
+    res.status(200).send('OK');
+  }
+};
