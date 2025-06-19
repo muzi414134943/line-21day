@@ -49,18 +49,6 @@ function buildFlexCard(imgUrl) {
       "aspectMode": "cover"
     },
     "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "image",
-          "url": COVER_IMG,
-          "size": "full",
-          "aspectRatio": "2:1",
-          "aspectMode": "cover",
-          "margin": "none"
-        },
-        {
           "type": "text",
           "text": "請靜心感受今日語錄的訊息吧～",
           "wrap": true,
