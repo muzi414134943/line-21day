@@ -27,6 +27,9 @@ const QUOTES_IMAGES = [
 ];
 
 module.exports = (req, res) => {
+  // 加這一行允許跨網域呼叫
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
   const imgUrl = QUOTES_IMAGES[Math.floor(Math.random() * QUOTES_IMAGES.length)];
   res.status(200).json({
     img: imgUrl,
